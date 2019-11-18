@@ -1,0 +1,80 @@
+﻿
+    <!-- 广告 -->
+    <div class="ads">
+        <div class="cg">
+            <img src="../images/demo3.jpg" />
+        </div>
+    </div>
+
+    <div class="comarticle">
+        <div class="cg">
+            <div class="am-u-sm-12">
+                <div class="comarticle-right">
+                    <h1 id="title"></h1>
+                    <ul id="uu">
+                       
+                    </ul>
+
+
+                </div>
+
+                <!-- 分页器 -->
+                
+            <div id="fenye">
+            </div>
+            </div>
+        </div>
+    </div>
+
+@section js1
+{
+    
+    <script>
+            var index = 1;
+            var curr = 1;
+        $(function () {
+            Data(index);
+        })
+        function Data(index) {
+            $.post("/home/list", { "cid":@Request.QueryString["cid"], "index": index, "size": 4 }, function (d) {
+                
+                if (d != null)
+                {
+                    var ul = $("#uu");
+                    ul.empty();
+                    $.each(d.rows, function (k, v) {
+                        console.log(v.aid);
+                        $("#title").text(v.ctitle);
+                        var li = $("<li>").appendTo(ul);
+                        $("<a href='/home/page?aid="+v.aid+"'><strong>" + v.title + "</strong><span>" + v.ahtml + "</span><h1><em>更新时间：" +$.convertJonsTime(v.ptime) + "</em><em>人气:" + v.hits + "</em></h1></a>").appendTo(li);
+                    });
+                    layui.use(
+                        ['laypage', 'layer'], function () {
+                            var laypage = layui.laypage,
+                                layer = layui.layer;
+                            laypage.render({
+                                 elem: 'fenye'
+                                ,count: d.total
+                                , curr: curr
+                                ,layout: ['prev', 'page', 'next', 'skip']
+                                , jump: function (obj, first) {
+                                    if (!first) {
+                                        curr = obj.curr;
+                                        console.log(obj.curr);
+                                        Data(obj.curr);
+                                    }
+                                }
+                              });
+                        }
+                    );
+                    
+                }
+            })
+        }
+
+
+    </script>
+}
+    
+
+    

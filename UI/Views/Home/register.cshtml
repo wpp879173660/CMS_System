@@ -1,0 +1,156 @@
+﻿@Model 
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <title>注册</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="~/css/default.css" rel="stylesheet" />
+    <script src="~/js/jquery-1.10.2.js"></script>
+    <style>
+        .a {
+            color: red
+        }
+    </style>
+    <script>
+            
+
+        function a() {
+            if ($("#name").val() == "" || $("#name").val() == null) {
+                $("#span1").text("用户名不能为空").addClass("a");
+                return false;
+            }
+            else {
+                $("#span1").text("");
+                return true;
+            }
+        }
+
+
+        function b() {
+            if ($("#pwd").val() == "" || $("#pwd").val() == null) {
+                $("#span2").text("密码不能为空").addClass("a");
+                return false;
+            }
+            else {
+                $("#span2").text("");
+                return true;
+            }
+        }
+
+        function c() {
+            if ($("#pwd1").val() != $("#pwd").val()) {
+                $("#span3").text("密码必须一致").addClass("a");;
+                return false;
+            }
+            else 
+            {
+               $("#span3").text("");
+                return true;
+            }
+        }
+        function cc() {
+            if ($("#pwd1").val().length<6) {
+                $("#span2").text("密码不能小于六位").addClass("a");;
+                return false;
+            }
+            else 
+            {
+               $("#span2").text("");
+                return true;
+            }
+        }
+        function d() {
+            return a() && b() && c() && cc();
+        }
+
+        
+        function zhece() {
+            if (($("#che").prop("checked"))) {
+                if (d()) {
+                    var user = { "uname": $("input[type=text]:eq(0)").val(), "upwd": $("input[type=password]:eq(0)").val(), "mobile": $("input[type=number]:eq(0)").val() };
+                    $.post("/home/register", { "user": user }, function (d) {
+                        if (d > 0) {
+                            alert('注册成功');
+                            window.location = '/home/login';
+                        }
+                        else if (d == 0) {
+                            alert('已存在该用户');
+                            window.location = '/home/register';
+                        }
+                        if (d < 0) {
+                            alert('注册失败');
+                            window.location = '/home/register';
+                        }
+                    });
+                }
+                else {
+
+                }
+            }
+            else
+            {
+                alert('请先勾选');
+                return;
+            }
+            
+            
+
+            
+        }
+    </script>
+</head>
+<body>
+    ﻿<header class="hd1">
+        <div class="cg">
+            <div class="hd1-left">
+                <a href="index.html"><img class="am-hide-md-down" src="../images/logo.jpg" /></a>
+                <a href="index.html"><img class="am-show-md-down" src="../images/logo-sm.jpg" /></a>
+            </div>
+            <div class="hd1-right">
+                <a href="/home/login">登录</a>
+                <a href="/home/register" class="cur">注册</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="user">
+        <div class="cgs">
+          
+                <div class="am-u-sm-12 am-u-md-7">
+                    <div class="user-div">
+                        <h1>用户注册</h1>
+                        <ul>
+                            <li><i>&#xe681;</i><input type="text" name="uname" value="" id="name" onkeyup="a()" placeholder="请输入用户名" /><span id="span1"></span></li>
+                            @*@Html.ValidationMessage("uname", new { @class = "a"})*@
+                            <li><i>&#xe680;</i><input type="password" name="upwd" value="" id="pwd" onkeyup="b()" placeholder="请输入密码" /><span id="span2"></span></li>
+                            @*@Html.ValidationMessage("upwd", new { @class = "a" })*@
+
+                            <li><i>&#xe680;</i><input type="password" name="urpwd" value="" id="pwd1" onkeyup="c()" placeholder="请输入确认密码" /><span id="span3"></span></li>
+                            @*@Html.ValidationMessage("urpwd", new { @class = "a" })*@
+                            <li><i>&#xe6ed;</i><input type="number" name="mobile" value="" placeholder="请输入手机号" /><span id="span4"></span></li>
+                            @*@Html.ValidationMessage("mobile", new { @class = "a" })*@
+                        </ul>
+                        <span><input type="checkbox" name="name" value="" id="che"/>我已阅读并接受<a href="#">版权说明和隐私保护条款</a></span>
+                        <button onclick="zhece()">注册</button>
+                    </div>
+                </div>
+           
+            <div class="am-hide-sm am-u-md-5">
+                <div class="user-right">
+                    <a href="/home/login">已有帐号</a>
+                    <button onclick="location.href = '/home/login';">立即登录</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

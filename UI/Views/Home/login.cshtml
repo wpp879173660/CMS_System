@@ -1,0 +1,62 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <title>登陆</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="~/css/default.css" rel="stylesheet" />
+    <script src="~/js/jquery-1.10.2.js"></script>
+    <script>
+       
+    </script>
+</head>
+<body>
+    ﻿<header class="hd1">
+        <div class="cg" >
+            <div class="hd1-left">
+                <a href="/home/index"><img class="am-hide-md-down" src="../images/logo.jpg" /></a>
+                <a href="/home/index"><img class="am-show-md-down" src="../images/logo-sm.jpg" /></a>
+            </div>
+            <div class="hd1-right">
+                <a href="/home/login" class="cur">登录</a>
+                <a href="/home/register">注册</a>
+                
+            </div>
+        </div>
+    </header>
+
+
+    <div class="user">
+        <div class="cgs">
+            <form action="/home/login" method="post">
+                <div class="am-u-sm-12 am-u-md-7">
+                    <div class="user-div">
+                        <h1>用户登录</h1>
+                        <ul>
+                            <li><i>&#xe681;</i><input type="text" name="uname" value="" placeholder="请输入用户名" /></li>
+                            <li><i>&#xe680;</i><input type="text" name="upwd" value="" placeholder="请输入密码" /></li>
+                        </ul>
+                        <span><a href="#">忘记密码</a></span>
+                        <button>登录</button>
+                    </div>
+                </div>
+            </form>
+            <div class="am-hide-sm am-u-md-5">
+                <div class="user-right">
+                    <a href="/home/register">还没有帐号</a>
+                    <button onclick="location.href = '/home/register';">立即注册</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

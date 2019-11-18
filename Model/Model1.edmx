@@ -1,0 +1,375 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CMS_Article">
+          <Key>
+            <PropertyRef Name="aid" />
+          </Key>
+          <Property Name="aid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cid" Type="int" />
+          <Property Name="title" Type="varchar" MaxLength="50" />
+          <Property Name="author" Type="varchar" MaxLength="10" />
+          <Property Name="uid" Type="int" />
+          <Property Name="ctime" Type="datetime" />
+          <Property Name="ptime" Type="datetime" />
+          <Property Name="istop" Type="bit" />
+          <Property Name="state" Type="int" />
+          <Property Name="hits" Type="int" />
+          <Property Name="comments" Type="int" />
+          <Property Name="ahtml" Type="text" />
+        </EntityType>
+        <EntityType Name="CMS_Category">
+          <Key>
+            <PropertyRef Name="cid" />
+          </Key>
+          <Property Name="cid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ctitle" Type="varchar" MaxLength="20" />
+          <Property Name="cname" Type="varchar" MaxLength="20" />
+          <Property Name="nav" Type="bit" />
+          <Property Name="navorder" Type="int" />
+          <Property Name="search" Type="bit" />
+        </EntityType>
+        <EntityType Name="CMS_Comment">
+          <Key>
+            <PropertyRef Name="cmid" />
+          </Key>
+          <Property Name="cmid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="aid" Type="int" />
+          <Property Name="uid" Type="int" />
+          <Property Name="cmtime" Type="datetime" />
+          <Property Name="cmhtml" Type="text" />
+        </EntityType>
+        <EntityType Name="CMS_Keyword">
+          <Key>
+            <PropertyRef Name="kid" />
+          </Key>
+          <Property Name="kid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="keyword" Type="varchar" MaxLength="20" />
+          <Property Name="stimes" Type="int" />
+          <Property Name="ltimes" Type="datetime" />
+          <Property Name="show" Type="bit" />
+        </EntityType>
+        <EntityType Name="CMS_User">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="uid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uname" Type="varchar" MaxLength="20" />
+          <Property Name="upwd" Type="varchar" MaxLength="36" />
+          <Property Name="nname" Type="varchar" MaxLength="20" />
+          <Property Name="mobile" Type="varchar" MaxLength="20" />
+          <Property Name="face" Type="varchar" MaxLength="50" />
+          <Property Name="admin" Type="bit" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“CMS.dbo.V_CMS_Article”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="V_CMS_Article">
+          <Key>
+            <PropertyRef Name="aid" />
+          </Key>
+          <Property Name="aid" Type="int" Nullable="false" />
+          <Property Name="cid" Type="int" />
+          <Property Name="title" Type="varchar" MaxLength="40" />
+          <Property Name="author" Type="varchar" MaxLength="10" />
+          <Property Name="uid" Type="int" />
+          <Property Name="ctime" Type="datetime" />
+          <Property Name="ptime" Type="datetime" />
+          <Property Name="istop" Type="bit" />
+          <Property Name="state" Type="int" />
+          <Property Name="hits" Type="int" />
+          <Property Name="comments" Type="int" />
+          <Property Name="ahtml" Type="text" />
+          <Property Name="ctitle" Type="varchar" MaxLength="20" />
+          <Property Name="cname" Type="varchar" MaxLength="20" />
+          <Property Name="nname" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“CMS.dbo.V_CMS_Comment”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="V_CMS_Comment">
+          <Key>
+            <PropertyRef Name="cmid" />
+          </Key>
+          <Property Name="cmid" Type="int" Nullable="false" />
+          <Property Name="aid" Type="int" />
+          <Property Name="uid" Type="int" />
+          <Property Name="cmtime" Type="datetime" />
+          <Property Name="cmhtml" Type="text" />
+          <Property Name="nname" Type="varchar" MaxLength="20" />
+          <Property Name="face" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityContainer Name="CMSModelStoreContainer">
+          <EntitySet Name="CMS_Article" EntityType="Self.CMS_Article" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CMS_Category" EntityType="Self.CMS_Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CMS_Comment" EntityType="Self.CMS_Comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CMS_Keyword" EntityType="Self.CMS_Keyword" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CMS_User" EntityType="Self.CMS_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="V_CMS_Article" EntityType="Self.V_CMS_Article" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [V_CMS_Article].[aid] AS [aid], 
+    [V_CMS_Article].[cid] AS [cid], 
+    [V_CMS_Article].[title] AS [title], 
+    [V_CMS_Article].[author] AS [author], 
+    [V_CMS_Article].[uid] AS [uid], 
+    [V_CMS_Article].[ctime] AS [ctime], 
+    [V_CMS_Article].[ptime] AS [ptime], 
+    [V_CMS_Article].[istop] AS [istop], 
+    [V_CMS_Article].[state] AS [state], 
+    [V_CMS_Article].[hits] AS [hits], 
+    [V_CMS_Article].[comments] AS [comments], 
+    [V_CMS_Article].[ahtml] AS [ahtml], 
+    [V_CMS_Article].[ctitle] AS [ctitle], 
+    [V_CMS_Article].[cname] AS [cname], 
+    [V_CMS_Article].[nname] AS [nname]
+    FROM [dbo].[V_CMS_Article] AS [V_CMS_Article]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="V_CMS_Comment" EntityType="Self.V_CMS_Comment" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [V_CMS_Comment].[cmid] AS [cmid], 
+    [V_CMS_Comment].[aid] AS [aid], 
+    [V_CMS_Comment].[uid] AS [uid], 
+    [V_CMS_Comment].[cmtime] AS [cmtime], 
+    [V_CMS_Comment].[cmhtml] AS [cmhtml], 
+    [V_CMS_Comment].[nname] AS [nname], 
+    [V_CMS_Comment].[face] AS [face]
+    FROM [dbo].[V_CMS_Comment] AS [V_CMS_Comment]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CMS_Article">
+          <Key>
+            <PropertyRef Name="aid" />
+          </Key>
+          <Property Name="aid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cid" Type="Int32" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="author" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="uid" Type="Int32" />
+          <Property Name="ctime" Type="DateTime" Precision="3" />
+          <Property Name="ptime" Type="DateTime" Precision="3" />
+          <Property Name="istop" Type="Boolean" />
+          <Property Name="state" Type="Int32" />
+          <Property Name="hits" Type="Int32" />
+          <Property Name="comments" Type="Int32" />
+          <Property Name="ahtml" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CMS_Category">
+          <Key>
+            <PropertyRef Name="cid" />
+          </Key>
+          <Property Name="cid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ctitle" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="cname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="nav" Type="Boolean" />
+          <Property Name="navorder" Type="Int32" />
+          <Property Name="search" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="CMS_Comment">
+          <Key>
+            <PropertyRef Name="cmid" />
+          </Key>
+          <Property Name="cmid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="aid" Type="Int32" />
+          <Property Name="uid" Type="Int32" />
+          <Property Name="cmtime" Type="DateTime" Precision="3" />
+          <Property Name="cmhtml" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CMS_Keyword">
+          <Key>
+            <PropertyRef Name="kid" />
+          </Key>
+          <Property Name="kid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="keyword" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="stimes" Type="Int32" />
+          <Property Name="ltimes" Type="DateTime" Precision="3" />
+          <Property Name="show" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="CMS_User">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="uid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="upwd" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Name="nname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="face" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="admin" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="V_CMS_Article">
+          <Key>
+            <PropertyRef Name="aid" />
+          </Key>
+          <Property Name="aid" Type="Int32" Nullable="false" />
+          <Property Name="cid" Type="Int32" />
+          <Property Name="title" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="author" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="uid" Type="Int32" />
+          <Property Name="ctime" Type="DateTime" Precision="3" />
+          <Property Name="ptime" Type="DateTime" Precision="3" />
+          <Property Name="istop" Type="Boolean" />
+          <Property Name="state" Type="Int32" />
+          <Property Name="hits" Type="Int32" />
+          <Property Name="comments" Type="Int32" />
+          <Property Name="ahtml" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ctitle" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="cname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="nname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="V_CMS_Comment">
+          <Key>
+            <PropertyRef Name="cmid" />
+          </Key>
+          <Property Name="cmid" Type="Int32" Nullable="false" />
+          <Property Name="aid" Type="Int32" />
+          <Property Name="uid" Type="Int32" />
+          <Property Name="cmtime" Type="DateTime" Precision="3" />
+          <Property Name="cmhtml" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="nname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="face" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="CMSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CMS_Article" EntityType="Self.CMS_Article" />
+          <EntitySet Name="CMS_Category" EntityType="Self.CMS_Category" />
+          <EntitySet Name="CMS_Comment" EntityType="Self.CMS_Comment" />
+          <EntitySet Name="CMS_Keyword" EntityType="Self.CMS_Keyword" />
+          <EntitySet Name="CMS_User" EntityType="Self.CMS_User" />
+          <EntitySet Name="V_CMS_Article" EntityType="Self.V_CMS_Article" />
+          <EntitySet Name="V_CMS_Comment" EntityType="Self.V_CMS_Comment" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CMSModelStoreContainer" CdmEntityContainer="CMSEntities">
+          <EntitySetMapping Name="CMS_Article">
+            <EntityTypeMapping TypeName="CMSModel.CMS_Article">
+              <MappingFragment StoreEntitySet="CMS_Article">
+                <ScalarProperty Name="aid" ColumnName="aid" />
+                <ScalarProperty Name="cid" ColumnName="cid" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="author" ColumnName="author" />
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="ctime" ColumnName="ctime" />
+                <ScalarProperty Name="ptime" ColumnName="ptime" />
+                <ScalarProperty Name="istop" ColumnName="istop" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="hits" ColumnName="hits" />
+                <ScalarProperty Name="comments" ColumnName="comments" />
+                <ScalarProperty Name="ahtml" ColumnName="ahtml" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CMS_Category">
+            <EntityTypeMapping TypeName="CMSModel.CMS_Category">
+              <MappingFragment StoreEntitySet="CMS_Category">
+                <ScalarProperty Name="cid" ColumnName="cid" />
+                <ScalarProperty Name="ctitle" ColumnName="ctitle" />
+                <ScalarProperty Name="cname" ColumnName="cname" />
+                <ScalarProperty Name="nav" ColumnName="nav" />
+                <ScalarProperty Name="navorder" ColumnName="navorder" />
+                <ScalarProperty Name="search" ColumnName="search" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CMS_Comment">
+            <EntityTypeMapping TypeName="CMSModel.CMS_Comment">
+              <MappingFragment StoreEntitySet="CMS_Comment">
+                <ScalarProperty Name="cmid" ColumnName="cmid" />
+                <ScalarProperty Name="aid" ColumnName="aid" />
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="cmtime" ColumnName="cmtime" />
+                <ScalarProperty Name="cmhtml" ColumnName="cmhtml" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CMS_Keyword">
+            <EntityTypeMapping TypeName="CMSModel.CMS_Keyword">
+              <MappingFragment StoreEntitySet="CMS_Keyword">
+                <ScalarProperty Name="kid" ColumnName="kid" />
+                <ScalarProperty Name="keyword" ColumnName="keyword" />
+                <ScalarProperty Name="stimes" ColumnName="stimes" />
+                <ScalarProperty Name="ltimes" ColumnName="ltimes" />
+                <ScalarProperty Name="show" ColumnName="show" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CMS_User">
+            <EntityTypeMapping TypeName="CMSModel.CMS_User">
+              <MappingFragment StoreEntitySet="CMS_User">
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="uname" ColumnName="uname" />
+                <ScalarProperty Name="upwd" ColumnName="upwd" />
+                <ScalarProperty Name="nname" ColumnName="nname" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="face" ColumnName="face" />
+                <ScalarProperty Name="admin" ColumnName="admin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_CMS_Article">
+            <EntityTypeMapping TypeName="CMSModel.V_CMS_Article">
+              <MappingFragment StoreEntitySet="V_CMS_Article">
+                <ScalarProperty Name="aid" ColumnName="aid" />
+                <ScalarProperty Name="cid" ColumnName="cid" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="author" ColumnName="author" />
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="ctime" ColumnName="ctime" />
+                <ScalarProperty Name="ptime" ColumnName="ptime" />
+                <ScalarProperty Name="istop" ColumnName="istop" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="hits" ColumnName="hits" />
+                <ScalarProperty Name="comments" ColumnName="comments" />
+                <ScalarProperty Name="ahtml" ColumnName="ahtml" />
+                <ScalarProperty Name="ctitle" ColumnName="ctitle" />
+                <ScalarProperty Name="cname" ColumnName="cname" />
+                <ScalarProperty Name="nname" ColumnName="nname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_CMS_Comment">
+            <EntityTypeMapping TypeName="CMSModel.V_CMS_Comment">
+              <MappingFragment StoreEntitySet="V_CMS_Comment">
+                <ScalarProperty Name="cmid" ColumnName="cmid" />
+                <ScalarProperty Name="aid" ColumnName="aid" />
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="cmtime" ColumnName="cmtime" />
+                <ScalarProperty Name="cmhtml" ColumnName="cmhtml" />
+                <ScalarProperty Name="nname" ColumnName="nname" />
+                <ScalarProperty Name="face" ColumnName="face" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

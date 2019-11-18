@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <link href="~/Areas/easyui/1.5.2/themes/default/easyui.css" rel="stylesheet" />
+    <script src="~/Areas/easyui/1.5.2/jquery.min.js"></script>
+    <script src="~/Areas/easyui/1.5.2/jquery.easyui.min.js"></script>
+    <script src="easyui/1.5.2/locale/easyui-lang-zh_CN.js"></script>
+    <link href="~/Areas/css/icon.css" rel="stylesheet" />
+    <link href="~/Areas/css/wu.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="easyui-layout" data-options="fit:true">
+        <table id="wu-datagrid-comment" class="easyui-datagrid"
+               title="最新评论"></table>
+        <br />
+        <br />
+        <table id="wu-datagrid-user" class="easyui-datagrid"
+               title="最新注册的用户"></table>
+
+        <br />
+        <br />
+        <table id="wu-datagrid-article" class="easyui-datagrid"
+               title="最新被访问的文章"></table>
+    </div>
+
+    <script src="~/js/MyTime.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            /**
+        * 载入数据
+        */
+            //alert(1)
+            $('#wu-datagrid-comment').datagrid({
+                method: 'get',
+                url: '/index/seleCMS_Comment',
+                collapsible: true,
+                singleSelect: true,
+                fitColumns: true,
+                columns: [[
+                    { field: 'cmid', title: 'ID', width: 100 },
+                    { field: 'cmhtml', title: '内容', width: 100 },
+                    {
+                        field: 'cmtime', title: '时间', width: 180,
+                        formatter: function (a, b, c) {
+                            return $.convertJonsTime(b.cmtime);
+                        }
+                    },
+                ]]
+            });
+
+            /**
+            * 载入数据
+            */
+            $('#wu-datagrid-user').datagrid({
+                method: 'get',
+                url: '/index/seleCMS_Userss',
+                collapsible: true,
+                singleSelect: true,
+                fitColumns: true,
+                columns: [[
+                    { field: 'uid', title: 'ID', width: 100 },
+                    { field: 'uname', title: '用户名', width: 180 },
+                    { field: 'mobile', title: '电话', width: 100 },
+                ]]
+            });
+
+            ///**
+            //* 载入数据
+            //*/
+            //$('#wu-datagrid-article').datagrid({
+            //    method: 'get',
+            //    url: '../data/data2.json',
+            //    collapsible: true,
+            //    singleSelect: true,
+            //    fitColumns: true,
+            //    columns: [[
+            //        { field: 'productid', title: 'productid', width: 100 },
+            //        { field: 'productname', title: 'productname', width: 180 },
+            //        { field: 'unitcost', title: 'unitcost', width: 100 },
+            //    ]]
+            //});
+        });
+    </script>
+</body>
+</html>

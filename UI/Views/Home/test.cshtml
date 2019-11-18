@@ -1,0 +1,29 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>test</title>
+    <script src="~/ueditor/ueditor.config.js"></script>
+    <script src="~/ueditor/ueditor.all.min.js"></script>
+
+    @* <script src="~/ueditor/lang/zh-cn/zh-cn.js"></script>*@
+</head>
+<body>
+    <div>
+        <div style="width:100%;">
+            <h1>完整demo</h1>
+            <script id="editor" type="text/plain" style="width:44px;height:200px;">
+            </script>
+            <script>
+                 var ue = UE.getEditor('editor');
+            </script>
+        </div>
+    </div>
+</body>
+</html>
