@@ -12,6 +12,7 @@ namespace UI.Controllers
     {
         DALBase db = new DALBase();
         // GET: Home
+        CMSEntities d = new CMSEntities();
         public ActionResult Index()
         {
             if(Session["name"]==null)
@@ -49,7 +50,15 @@ namespace UI.Controllers
             }
             else
             {
-                return Content("<script>alert('用户名或密码错误！');window.location='/home/login'</script>");
+                var us = d.CMS_User.Where(c => c.uname == uname).ToList();
+                if (us == null)
+                {
+                    return Content("<script>alert('用户名或密码不存在！你可以注册新的账号');window.location='/home/register'</script>");
+                }
+                else {
+                    return Content("<script>alert('用户名或密码不存在！');window.location='/home/login'</script>");
+                }
+                
             }
             
         }
